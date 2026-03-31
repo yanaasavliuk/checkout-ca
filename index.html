@@ -121,12 +121,12 @@
     }
 
     /* ── PAGE ── */
-    .page { display: flex; flex-direction: column; min-height: 100vh; width: 100%; background: var(--bg); }
+    .page { display: flex; flex-direction: column; min-height: 100vh; width: 100%; background: var(--bg); max-width: 1084px; margin: 0 auto; }
 
     /* ── HEADER ── */
     .header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0; height: 4rem; flex-shrink: 0; width: 100%;
+      padding: 0 1.2rem; height: 4rem; flex-shrink: 0; width: 100%;
     }
     .site-logo { display: flex; align-items: center; flex-shrink: 0; }
     .site-logo img { height: 3.2rem; width: auto; display: block; }
@@ -143,7 +143,7 @@
     /* ── MAIN ── */
     .main {
       flex: 1; display: flex; flex-direction: column; align-items: center;
-      padding: 3.2rem 2.4rem 12rem; gap: 2rem;
+      padding: 3.2rem 1.2rem 12rem; gap: 2rem;
     }
 
     /* ── HEADING BLOCK ── */
@@ -159,7 +159,7 @@
     }
 
     /* ── CONTENT (414px) ── */
-    .content { width: 100%; max-width: 41.4rem; display: flex; flex-direction: column; gap: 2rem; }
+    .content { width: 100%; max-width: 41.4rem; display: flex; flex-direction: column; gap: 3rem; }
 
     /* ── PLAN BADGE ── */
     .badge {
@@ -190,7 +190,7 @@
     .pay-tab svg { display: block; width: 100%; height: 100%; object-fit: contain; }
 
     /* ── FORM ── */
-    .form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form { display: flex; flex-direction: column; gap: 1.6rem; }
     .field { display: flex; flex-direction: column; gap: .8rem; }
     .field-row { display: flex; gap: 1rem; }
     .field-row .field { flex: 1 1 0; min-width: 0; }
@@ -292,8 +292,8 @@
     .is-mobile .bottom     { max-width: 34.2rem; }
     .is-mobile .savings    { font-size: 1.2rem; }
     .is-phone-sm .main     { padding-left: 1.2rem; padding-right: 1.2rem; }
-    /* mobile header: 40px tall, 7px side padding (Figma spec) */
-    .is-mobile .header { height: 4rem; padding: 0 0.7rem; }
+    /* mobile header: 40px tall, 12px side padding matching main */
+    .is-mobile .header { height: 4rem; padding: 0 1.2rem; }
     .is-mobile .cta-btn    { max-width: 100%; font-size: 1.7rem; line-height: 2rem; font-weight: 700; }
     .is-mobile .label      { font-size: 1.7rem; line-height: 2.4rem; }
     .is-mobile .input      { height: 4.8rem; font-size: 1.8rem; }
