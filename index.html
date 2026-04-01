@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout Prototype — California</title>
+  <title>Checkout Prototype — Live</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -58,6 +58,31 @@
     }
     .proto-pill:hover { border-color: rgba(255,255,255,.4); color: var(--text); }
     .proto-pill.active { background: rgba(255,255,255,.06); border-color: var(--blue-200); color: var(--blue-200); }
+
+    /* ── PROTO SELECT (dropdown) ── */
+    .proto-select {
+      width: 100%; padding: .7rem 2.8rem .7rem 1rem;
+      background: rgba(255,255,255,.06) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,.45)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 1rem center;
+      border: 1px solid rgba(255,255,255,.12); border-radius: 5px;
+      color: var(--text); font-size: 1.2rem; font-family: var(--font-body);
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+    }
+    .proto-select:focus { outline: none; border-color: rgba(255,255,255,.3); }
+    .proto-select option { background: #2b2724; color: var(--text); }
+
+    /* ── PROTO TOGGLE (billing) ── */
+    .proto-toggle {
+      display: flex; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12); border-radius: 5px; padding: 2px; gap: 2px;
+    }
+    .proto-toggle-opt {
+      flex: 1; padding: .5rem .8rem; border-radius: 3px;
+      font-size: 1.2rem; font-family: var(--font-body);
+      color: var(--text-subtle); background: transparent; border: none;
+      cursor: pointer; transition: all .15s; text-align: center;
+    }
+    .proto-toggle-opt:hover { color: var(--text); }
+    .proto-toggle-opt.active { background: rgba(255,255,255,.12); color: var(--white); }
 
     /* ── PAGE FRAME ── */
     .page-frame {
@@ -260,11 +285,11 @@
     .cta-btn:hover:not(:disabled) { filter: brightness(1.06); }
 
     /* ── TAX ── */
-    .tax { text-align: center; font-size: 1.4rem; line-height: 1.6rem; color: rgba(255,255,255,.72); font-family: var(--font-body); font-weight: 400; }
+    .tax { text-align: center; font-size: 1.4rem; line-height: 1.6rem; color: var(--text-subtle); font-family: var(--font-body); font-weight: 400; }
 
     /* ── WALLET CTA BUTTONS ── */
     .cta-paypal {
-      width: 100%; max-width: 41.4rem; height: 4.5rem; border-radius: 0.3rem;
+      width: 100%; max-width: 41.4rem; height: 5.5rem; border-radius: 0.3rem;
       background: #FFC439; border: none;
       display: none; align-items: center; justify-content: center;
       cursor: pointer; transition: filter .15s; flex-shrink: 0;
@@ -276,7 +301,7 @@
       display: none; align-items: center; justify-content: center; gap: 0.6rem;
       cursor: pointer; transition: filter .15s; flex-shrink: 0;
       font-family: "Roboto", -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 1.8rem; font-weight: 500; color: #3c4043; letter-spacing: .01em;
+      font-size: 2.7rem; font-weight: 500; color: #3c4043; letter-spacing: .01em;
     }
     .cta-gpay:hover { filter: brightness(.97); }
     .cta-applepay {
@@ -285,7 +310,7 @@
       display: none; align-items: center; justify-content: center; gap: 0;
       cursor: pointer; transition: filter .15s; flex-shrink: 0;
       font-family: -apple-system, "system-ui", BlinkMacSystemFont, sans-serif;
-      font-size: 2.7rem; font-weight: 300; color: #000; letter-spacing: -.01em;
+      font-size: 2.7rem; font-weight: 400; color: #000; letter-spacing: -.01em;
       padding: 0.1rem 0.6rem;
     }
     .cta-applepay .apple-pay-logo {
@@ -295,9 +320,57 @@
       display: block; filter: brightness(0);
     }
     .cta-applepay:hover { filter: brightness(.96); }
+    /* ── PRODUCT CARD (variant) ── */
+    .product-card {
+      background: #262421; border: 1px solid rgba(255,255,255,.10);
+      border-radius: 1rem; padding: 2.3rem;
+      width: 50.1rem; max-width: 50.1rem;
+      display: none; flex-direction: column; gap: 1.6rem;
+      box-sizing: border-box; align-self: center;
+    }
+    .product-card__header { display: flex; gap: 1.6rem; align-items: flex-start; }
+    .product-card__info   { display: flex; flex-direction: column; gap: 0.8rem; flex: 1; }
+    .product-card__title  {
+      font-family: "Chess Sans", sans-serif; font-weight: 700;
+      font-size: 2.0rem; line-height: 2.6rem; color: #fff; margin: 0;
+    }
+    .product-card__bullets {
+      list-style: disc; margin: 0; padding-left: 1.8rem;
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .product-card__bullets li {
+      font-family: var(--font-body); font-size: 1.2rem;
+      line-height: 1.6rem; color: rgba(255,255,255,.72);
+    }
+    /* footer: divider + due today grouped with 12px gap (matches Figma "Pricing section") */
+    .product-card__footer  { display: flex; flex-direction: column; gap: 1.2rem; width: 100%; padding-left: 5.7rem; padding-right: 2.4rem; }
+    .product-card__divider { height: 1px; background: rgba(255,255,255,.10); }
+    .product-card__pricing { display: flex; justify-content: space-between; align-items: flex-end; }
+    .product-card__due-label {
+      font-family: "Chess Sans", sans-serif; font-weight: 600;
+      font-size: 1.8rem; line-height: 2.4rem; color: #fff;
+    }
+    .product-card__due-amount {
+      font-family: "Chess Sans", sans-serif; font-weight: 700;
+      font-size: 1.8rem; line-height: 2.4rem; color: #fff; text-align: right;
+    }
+    /* Variant: Product Card — show card, hide badge; card uses align-self:center to stay 501px */
+    .variant-product-card .badge        { display: none !important; }
+    .variant-product-card .product-card { display: flex; }
+    /* 24px gaps: h1 → card, card → payment methods */
+    .variant-product-card .main         { gap: 2.4rem; }
+    .variant-product-card .content      { gap: 2.4rem; }
+
+    /* ── EU FORM LAYOUT ── */
+    .form--eu { display: none; flex-direction: column; gap: 1.6rem; }
+    .no-zip .form--desktop { display: none !important; }
+    .no-zip .form--mobile  { display: none !important; }
+    .no-zip .form--eu      { display: flex; }
+
     /* hide card form when wallet method active */
     .form-section.is-wallet .form--desktop,
-    .form-section.is-wallet .form--mobile { display: none !important; }
+    .form-section.is-wallet .form--mobile,
+    .form-section.is-wallet .form--eu { display: none !important; }
     /* wallet zip: hidden by default, shown when wallet method selected */
     .wallet-zip { display: none; flex-direction: column; gap: 1.6rem; }
     .form-section.is-wallet .wallet-zip { display: flex; }
@@ -348,42 +421,121 @@
     /* swap form layouts */
     .is-mobile .form--desktop  { display: none; }
     .is-mobile .form--mobile   { display: flex; }
-    /* mobile uses same web copy as desktop — only form layout changes */
+    /* product card: revert to full width on mobile */
+    .is-mobile .product-card             { width: 100%; max-width: 100%; align-self: stretch; }
+    .is-mobile .product-card__title      { font-size: 1.7rem; line-height: 2.2rem; }
+    .is-mobile .product-card__header img { width: 3.2rem; height: 3.2rem; }
+    /* pricing row: remove desktop inset on mobile so divider + labels sit at card edges */
+    .is-mobile .product-card__footer     { padding: 0; }
+    /* 16px gaps on mobile: h1 → card, card → payment methods */
+    .is-mobile.variant-product-card .main    { gap: 1.6rem; }
+    .is-mobile.variant-product-card .content { gap: 1.6rem; }
+
+    /* ── 30-DAY MONEY-BACK CHIP ── */
+    .money-back-chip {
+      display: none; align-items: center; justify-content: center;
+      gap: 0.4rem; padding: 0.2rem 0.4rem; min-height: 2rem;
+      border-radius: 0.3rem; width: 100%;
+    }
+    .money-back-chip span {
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 1.2rem; line-height: 1.6rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      color: #81b64c;
+    }
+    /* Money-back v1: green chip shown above consent/legal */
+    .variant-money-back .money-back-chip    { display: flex; margin-bottom: -0.8rem; }
+    .variant-money-back .savings            { display: none !important; }
+
+    /* Money-back v2 chip — neutral pill, not green */
+    .money-back-chip-v2 {
+      display: none; align-items: center; justify-content: center;
+      gap: 0.4rem; padding: 0.6rem 1.2rem; min-height: 2rem;
+      border-radius: 2rem; background: #312e2b;
+      border: 1px solid rgba(255,255,255,.25);
+      color: rgba(255,255,255,.72);
+      margin-bottom: -0.8rem;
+    }
+    .money-back-chip-v2 span {
+      font-family: var(--font-body); font-weight: 600;
+      font-size: 1.2rem; line-height: 1.6rem;
+      text-shadow: 0 1px 0 rgba(0,0,0,.2);
+    }
+    .variant-money-back-v2 .money-back-chip-v2 { display: flex; }
+    .variant-money-back-v2 .savings            { display: none !important; }
+    .variant-money-back-v2 .consent-row        { display: none !important; }
+    .variant-money-back-v2 .consent-mobile     { display: none !important; }
+    .variant-money-back-v2 .agreement-mobile   { display: none !important; }
+    .variant-money-back-v2 .legal              { margin-top: 0; gap: 1.6rem; }
+
+    /* ── REGION: no-zip (EU) ── */
+    .no-zip #zip-field-desktop,
+    .no-zip #zip-field-mobile,
+    .no-zip #zip-field-wallet { display: none !important; }
   </style>
 </head>
 <body>
 
   <!-- ── PROTO PANEL ── -->
   <div class="proto-panel">
+
+    <!-- 1. Variant (pills) -->
+    <div class="proto-section">
+      <span class="proto-label">Variant</span>
+      <div class="proto-pills" id="variant-pills">
+        <button class="proto-pill active" onclick="setVariant('live',this)">Live Checkout</button>
+        <button class="proto-pill" onclick="setVariant('product-card',this)">Product Card Experiment</button>
+        <button class="proto-pill" onclick="setVariant('money-back',this)">30-days Money Back Guarantee</button>
+        <button class="proto-pill" onclick="setVariant('money-back-v2',this)">30-days Money Back Guarantee v2</button>
+      </div>
+    </div>
+
+    <!-- 2. Region (pills) -->
+    <div class="proto-section">
+      <span class="proto-label">Region</span>
+      <div class="proto-pills" id="region-pills">
+        <button class="proto-pill active" onclick="setRegion('california',this)">California</button>
+        <button class="proto-pill" onclick="setRegion('eu',this)">EU</button>
+        <button class="proto-pill" onclick="setRegion('us',this)">US</button>
+      </div>
+    </div>
+
+    <!-- 3. Flow (dropdown) -->
     <div class="proto-section">
       <span class="proto-label">Flow</span>
-      <div class="proto-pills" id="flow-pills">
-        <button class="proto-pill active" onclick="setFlow('trial',this)">Free Trial</button>
-        <button class="proto-pill" onclick="setFlow('direct',this)">Direct Purchase</button>
-        <button class="proto-pill" onclick="setFlow('discount',this)">Discount Only</button>
-        <button class="proto-pill" onclick="setFlow('freetime',this)">Free Time Only</button>
-        <button class="proto-pill" onclick="setFlow('combined',this)">Combined</button>
-      </div>
+      <select class="proto-select" id="flow-select" onchange="setFlow(this.value)">
+        <option value="trial">Free Trial</option>
+        <option value="direct">Direct Purchase</option>
+        <option value="discount">Discount Only</option>
+        <option value="freetime">Free Time Only</option>
+        <option value="combined">Combined</option>
+      </select>
     </div>
+
+    <!-- 4. Billing (toggle) -->
     <div class="proto-section">
       <span class="proto-label">Billing</span>
-      <div class="proto-pills" id="billing-pills">
-        <button class="proto-pill active" onclick="setBilling('yearly',this)">Yearly</button>
-        <button class="proto-pill" onclick="setBilling('monthly',this)">Monthly</button>
+      <div class="proto-toggle" id="billing-toggle">
+        <button class="proto-toggle-opt active" onclick="setBilling('yearly',this)">Yearly</button>
+        <button class="proto-toggle-opt" onclick="setBilling('monthly',this)">Monthly</button>
       </div>
     </div>
+
+    <!-- 5. Device (dropdown) -->
     <div class="proto-section">
       <span class="proto-label">Device</span>
-      <div class="proto-pills" id="device-pills">
-        <button class="proto-pill" onclick="setDevice('phone-sm',this)">📱 Phone Small (360×640)</button>
-        <button class="proto-pill" onclick="setDevice('phone-md',this)">📱 Phone Medium (390×844)</button>
-        <button class="proto-pill" onclick="setDevice('phone-lg',this)">📱 Phone Large (430×932)</button>
-        <button class="proto-pill" onclick="setDevice('tablet-sm',this)">⬜ Tablet Small (810×1080)</button>
-        <button class="proto-pill" onclick="setDevice('tablet-md',this)">⬜ Tablet Medium (800×1280)</button>
-        <button class="proto-pill" onclick="setDevice('tablet-lg',this)">⬜ Tablet Large (1024×1366)</button>
-        <button class="proto-pill active" onclick="setDevice('full',this)">🖥 Desktop</button>
-      </div>
+      <select class="proto-select" id="device-select" onchange="setDevice(this.value)">
+        <option value="full" selected>🖥 Desktop</option>
+        <option value="phone-sm">📱 Phone Small (360×640)</option>
+        <option value="phone-md">📱 Phone Medium (390×844)</option>
+        <option value="phone-lg">📱 Phone Large (430×932)</option>
+        <option value="tablet-sm">⬜ Tablet Small (810×1080)</option>
+        <option value="tablet-md">⬜ Tablet Medium (800×1280)</option>
+        <option value="tablet-lg">⬜ Tablet Large (1024×1366)</option>
+      </select>
     </div>
+
+    <!-- 6. Orientation (pills) -->
     <div class="proto-section">
       <span class="proto-label">Orientation</span>
       <div class="proto-pills" id="orientation-pills">
@@ -391,6 +543,7 @@
         <button class="proto-pill" onclick="setOrientation('landscape',this)">Landscape</button>
       </div>
     </div>
+
   </div>
 
   <div class="page-frame" id="page-frame">
@@ -453,6 +606,29 @@
           <span id="plan-badge-text">Diamond - Yearly:&nbsp; $119.99</span>
         </div>
 
+        <!-- Product Card (shown in product-card variant) -->
+        <div class="product-card" id="product-card">
+          <div class="product-card__header">
+            <img src="https://www.chess.com/bundles/web/images/color-icons/commerce-diamond.79625166.svg"
+                 alt="" width="40" height="40" style="flex-shrink:0;">
+            <div class="product-card__info">
+              <p class="product-card__title" id="pc-title">Diamond Membership - Yearly</p>
+              <ul class="product-card__bullets">
+                <li id="pc-bullet1">Try Free for 7 Days</li>
+                <li>30 Day Money Back Guarantee</li>
+                <li>Cancel Anytime</li>
+              </ul>
+            </div>
+          </div>
+          <div class="product-card__footer">
+            <div class="product-card__divider"></div>
+            <div class="product-card__pricing">
+              <span class="product-card__due-label">Due Today:</span>
+              <span class="product-card__due-amount" id="pc-due-amount">$0.00</span>
+            </div>
+          </div>
+        </div>
+
         <!-- Form section -->
         <div class="form-section">
 
@@ -477,20 +653,15 @@
           </div>
 
           <!-- Wallet zip code (shown when wallet method active) -->
-          <div class="wallet-zip">
+          <div class="wallet-zip" id="zip-field-wallet">
             <div class="field">
-              <label class="label" for="w-zip">Zip Code</label>
+              <label class="label" id="zip-label-wallet" for="w-zip">Zip Code</label>
               <input class="input" id="w-zip" type="text" placeholder="00000" spellcheck="false" inputmode="numeric" maxlength="10">
             </div>
           </div>
 
           <!-- Form (desktop layout) -->
           <form class="form form--desktop" onsubmit="return false">
-            <!-- Email -->
-            <div class="field">
-              <label class="label" for="f-email">Email Address</label>
-              <input class="input" id="f-email" type="email" placeholder="Enter your email" spellcheck="false">
-            </div>
             <!-- Card + Expires -->
             <div class="field-row">
               <div class="field field--card">
@@ -517,9 +688,38 @@
                   </span>
                 </div>
               </div>
-              <div class="field">
-                <label class="label" for="f-zip">Zip Code</label>
+              <div class="field" id="zip-field-desktop">
+                <label class="label" id="zip-label-desktop" for="f-zip">Zip Code</label>
                 <input class="input" id="f-zip" type="text" placeholder="00000" spellcheck="false">
+              </div>
+            </div>
+          </form>
+
+          <!-- Form (EU layout: Card full width → Expires + CVV) -->
+          <form class="form form--eu" onsubmit="return false">
+            <!-- Card Number (full width) -->
+            <div class="field">
+              <label class="label" for="eu-card">Card Number</label>
+              <input class="input" id="eu-card" type="text" placeholder="•••• •••• •••• ••••" spellcheck="false">
+            </div>
+            <!-- Expires + Security Code -->
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="eu-exp">Expires</label>
+                <input class="input" id="eu-exp" type="text" placeholder="MM / YY" spellcheck="false">
+              </div>
+              <div class="field">
+                <label class="label" for="eu-cvv">Security Code</label>
+                <div class="input-wrap">
+                  <input class="input input--icon" id="eu-cvv" type="text" placeholder="123" spellcheck="false">
+                  <span class="input-icon-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.5"/>
+                      <path d="M12 16.5v-.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      <path d="M9.75 9.25a2.25 2.25 0 014.5 0c0 1.5-2.25 2-2.25 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </div>
               </div>
             </div>
           </form>
@@ -552,8 +752,8 @@
                   </span>
                 </div>
               </div>
-              <div class="field">
-                <label class="label" for="m-zip">Zip Code</label>
+              <div class="field" id="zip-field-mobile">
+                <label class="label" id="zip-label-mobile" for="m-zip">Zip Code</label>
                 <input class="input" id="m-zip" type="text" placeholder="00000" spellcheck="false">
               </div>
             </div>
@@ -567,6 +767,24 @@
 
         <!-- Savings -->
         <p class="savings" id="savings-text">You will save <strong>$83.89 / year compared to the monthly plan.</strong></p>
+
+        <!-- 30-day Money Back Guarantee chip (money-back variant only) -->
+        <div class="money-back-chip">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 1L1.5 2.8V6c0 2.3 1.9 4.3 4.5 5 2.6-.7 4.5-2.7 4.5-5V2.8L6 1z" stroke="#81b64c" stroke-width="1" stroke-linejoin="round"/>
+            <path d="M4 6l1.3 1.5L8 4.5" stroke="#81b64c" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>30 day money-back guarantee</span>
+        </div>
+
+        <!-- 30-day chip v2 (money-back-v2 variant only) — neutral pill per Figma -->
+        <div class="money-back-chip-v2">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 1L1.5 2.8V6c0 2.3 1.9 4.3 4.5 5 2.6-.7 4.5-2.7 4.5-5V2.8L6 1z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
+            <path d="M4 6l1.3 1.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>30 day money-back guarantee</span>
+        </div>
 
         <!-- Consent (checkbox + text) -->
         <div class="consent-row" id="consent-row">
@@ -602,7 +820,7 @@
 
         <!-- PayPal CTA -->
         <button class="cta-paypal" id="cta-paypal">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 33" height="22" width="82" aria-label="PayPal">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 33" height="28" width="105" aria-label="PayPal">
             <path fill="#003087" d="M46.211 6.749h-6.839a.95.95 0 0 0-.939.802l-2.766 17.537a.57.57 0 0 0 .564.658h3.265a.95.95 0 0 0 .939-.803l.746-4.73a.95.95 0 0 1 .938-.803h2.165c4.505 0 7.105-2.18 7.784-6.5.306-1.89.013-3.375-.872-4.415-.97-1.142-2.694-1.746-4.985-1.746zm.789 6.405c-.374 2.454-2.249 2.454-4.062 2.454h-1.032l.724-4.583a.57.57 0 0 1 .563-.481h.473c1.235 0 2.4 0 3.002.704.359.42.469 1.044.332 1.906zM66.654 13.075h-3.275a.57.57 0 0 0-.563.481l-.145.916-.229-.332c-.709-1.029-2.29-1.373-3.868-1.373-3.619 0-6.71 2.741-7.312 6.586-.313 1.918.132 3.752 1.22 5.031.998 1.176 2.426 1.666 4.125 1.666 2.916 0 4.533-1.875 4.533-1.875l-.146.91a.57.57 0 0 0 .562.66h2.95a.95.95 0 0 0 .939-.803l1.77-11.209a.568.568 0 0 0-.561-.658zm-4.565 6.374c-.316 1.871-1.801 3.127-3.695 3.127-.951 0-1.711-.305-2.199-.883-.484-.574-.668-1.391-.514-2.301.295-1.855 1.805-3.152 3.67-3.152.93 0 1.686.309 2.184.892.499.589.697 1.411.554 2.317zM84.096 13.075h-3.291a.954.954 0 0 0-.787.417l-4.539 6.686-1.924-6.425a.953.953 0 0 0-.912-.678h-3.234a.57.57 0 0 0-.541.754l3.625 10.638-3.408 4.811a.57.57 0 0 0 .465.9h3.287a.949.949 0 0 0 .781-.408l10.946-15.8a.57.57 0 0 0-.468-.895z"/>
             <path fill="#009cde" d="M94.992 6.749h-6.84a.95.95 0 0 0-.938.802L84.45 25.088a.569.569 0 0 0 .562.658h3.51a.665.665 0 0 0 .656-.562l.785-4.971a.95.95 0 0 1 .938-.803h2.164c4.506 0 7.105-2.18 7.785-6.5.307-1.89.012-3.375-.873-4.415-.971-1.142-2.694-1.746-4.985-1.746zm.789 6.405c-.373 2.454-2.248 2.454-4.062 2.454h-1.031l.725-4.583a.568.568 0 0 1 .562-.481h.473c1.234 0 2.4 0 3.002.704.359.42.468 1.044.331 1.906zM115.434 13.075h-3.273a.567.567 0 0 0-.562.481l-.145.916-.23-.332c-.709-1.029-2.289-1.373-3.867-1.373-3.619 0-6.71 2.741-7.312 6.586-.312 1.918.133 3.752 1.221 5.031.997 1.176 2.426 1.666 4.125 1.666 2.916 0 4.533-1.875 4.533-1.875l-.146.91a.57.57 0 0 0 .564.66h2.949a.95.95 0 0 0 .938-.803l1.771-11.209a.571.571 0 0 0-.566-.658zm-4.565 6.374c-.314 1.871-1.801 3.127-3.695 3.127-.949 0-1.711-.305-2.199-.883-.484-.574-.666-1.391-.514-2.301.297-1.855 1.805-3.152 3.67-3.152.93 0 1.686.309 2.184.892.501.589.699 1.411.554 2.317zM119.295 7.23l-2.807 17.858a.569.569 0 0 0 .562.658h2.822c.469 0 .867-.34.939-.803l2.768-17.536a.57.57 0 0 0-.562-.659h-3.16a.571.571 0 0 0-.562.482z"/>
           </svg>
@@ -611,7 +829,7 @@
         <!-- Google Pay CTA -->
         <button class="cta-gpay" id="cta-gpay">
           <span>Checkout with</span>
-          <img src="https://www.chess.com/bundles/web/images/logo-googlepay@2x.png" alt="Google Pay" style="height:22px;width:auto;">
+          <img src="https://www.chess.com/bundles/web/images/logo-googlepay@2x.png" alt="Google Pay" style="height:30px;width:auto;">
         </button>
 
         <!-- Apple Pay CTA -->
@@ -627,7 +845,7 @@
         <p class="recurring-text">Recurring billing. Cancel anytime.</p>
 
         <!-- Tax (desktop) -->
-        <p class="tax">Applicable taxes will be added to the above cost(s).</p>
+        <p class="tax" id="tax-text">Applicable taxes will be added to the above cost(s).</p>
 
       </div><!-- /bottom -->
     </main>
@@ -638,6 +856,113 @@
   <script>
     let currentFlow    = 'trial';
     let currentBilling = 'yearly';
+    let currentRegion  = 'california';
+
+    /* ── REGION CONFIG ── */
+    const regionConfig = {
+      california: {
+        zipLabel:        'Zip Code',
+        taxText:         'Applicable taxes will be added to the above cost(s).',
+        consentRequired: (flow) => states[flow][currentBilling].requireConsent,
+        consentSuffix:   '',
+        showCheckbox:    true,
+        showTax:         true,
+        showZip:         true,
+      },
+      eu: {
+        zipLabel:        'Postal Code',
+        taxText:         '',
+        consentRequired: () => false,
+        consentSuffix:   '',
+        showCheckbox:    false,
+        showTax:         false,
+        showZip:         false,
+        legalOverride:   () => ['Recurring billing. Cancel anytime.'],
+        savingsOverride: {
+          yearly: 'You will save <strong>€90.86 / year compared to the monthly plan.</strong>',
+        },
+        badgeOverride: {
+          trial:    { yearly: 'Diamond - Yearly:&nbsp; €124.99', monthly: 'Diamond - Monthly:&nbsp; €17.99' },
+          direct:   { yearly: 'Diamond - Yearly:&nbsp; €124.99', monthly: 'Diamond - Monthly:&nbsp; €17.99' },
+          discount: { yearly: 'Diamond - Yearly:&nbsp; €62.49',  monthly: 'Diamond - Monthly:&nbsp; €8.99'  },
+          freetime: { yearly: 'Diamond - Yearly:&nbsp; €124.99', monthly: 'Diamond - Monthly:&nbsp; €17.99' },
+          combined: { yearly: 'Diamond - Yearly:&nbsp; €62.49',  monthly: 'Diamond - Monthly:&nbsp; €17.99' },
+        },
+        subtitleOverride: {
+          discount: {
+            yearly:  '50% off Diamond Membership<br>(save €60.00/year)',
+            monthly: '50% off Diamond Membership<br>(save €8.50/month)',
+          },
+        },
+      },
+      us: {
+        zipLabel:        'Zip Code',
+        taxText:         'Applicable taxes will be added to the above cost(s).',
+        consentRequired: () => false,
+        consentSuffix:   '',
+        showCheckbox:    false,
+        showTax:         true,
+        showZip:         true,
+        legalOverride: () => {
+          const sa = '<a href="https://www.chess.com/legal/subscriber" target="_blank">Subscriber Agreement</a>';
+          return [
+            'Recurring billing. Cancel anytime.',
+            `I agree to the ${sa}.`,
+          ];
+        },
+      },
+    };
+
+    function setRegion(region, btn) {
+      currentRegion = region;
+      document.getElementById('consent-checkbox').checked = false;
+      document.querySelectorAll('#region-pills .proto-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render();
+    }
+
+    /* ── VARIANT ── */
+    let currentVariant = 'live';
+
+    function setVariant(variant, btn) {
+      currentVariant = variant;
+      document.querySelectorAll('#variant-pills .proto-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const page = document.getElementById('page-inner');
+      page.classList.remove('variant-product-card', 'variant-money-back', 'variant-money-back-v2');
+      if (variant === 'product-card')   page.classList.add('variant-product-card');
+      if (variant === 'money-back')     page.classList.add('variant-money-back');
+      if (variant === 'money-back-v2')  page.classList.add('variant-money-back-v2');
+      render();
+    }
+
+    function getRenewalDate() {
+      const d = new Date();
+      d.setFullYear(d.getFullYear() + 1);
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+               .replace(',', '');
+    }
+
+    function getDueToday() {
+      if (['trial', 'freetime', 'combined'].includes(currentFlow)) {
+        return currentRegion === 'eu' ? '€0.00' : '$0.00';
+      }
+      const priceMap = {
+        california: {
+          direct:   { yearly: '$119.99', monthly: '$16.99' },
+          discount: { yearly: '$59.99',  monthly: '$8.49'  },
+        },
+        eu: {
+          direct:   { yearly: '€124.99', monthly: '€17.99' },
+          discount: { yearly: '€62.49',  monthly: '€8.99'  },
+        },
+        us: {
+          direct:   { yearly: '$119.99', monthly: '$16.99' },
+          discount: { yearly: '$59.99',  monthly: '$8.49'  },
+        },
+      };
+      return (priceMap[currentRegion]?.[currentFlow]?.[currentBilling]) || '$0.00';
+    }
 
     /* ── DEVICE / ORIENTATION ── */
     const devices = {
@@ -690,9 +1015,7 @@
       }
     }
 
-    function setDevice(id, btn) {
-      document.querySelectorAll('#device-pills .proto-pill').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    function setDevice(id) {
       currentDevice = id;
       applyDevice();
     }
@@ -727,18 +1050,16 @@
         monthly: { heading: 'We hope you enjoy your special offer!', subtitle: '1 Free Month of Diamond Premium Membership', badge: 'Diamond - Monthly:&nbsp; $16.99', showSavings: false, savingsText: '', consent: 'I understand that after my 1 free month, I will be charged $16.99/month and that my subscription will automatically renew unless I cancel.',  legal: legalShort, cta: 'Start My 1 Free Month', requireConsent: false },
       },
       combined: {
-        yearly:  { heading: 'We hope you enjoy your special offer!', subtitle: '1 Free Month + 50% off your first year',  badge: 'Diamond - Yearly:&nbsp; $119.99',  showSavings: false, savingsText: '', consent: 'I understand that after my 1 free month, I will be charged $59.99 for the first year, then $119.99/year, and that my subscription will automatically renew unless I cancel.',   legal: legalShort, cta: 'Start My Diamond Membership', requireConsent: false },
+        yearly:  { heading: 'We hope you enjoy your special offer!', subtitle: '1 Free Month + 50% off your first year',  badge: 'Diamond - Yearly:&nbsp; $59.99',   showSavings: false, savingsText: '', consent: 'I understand that after my 1 free month, I will be charged $59.99 for the first year, then $119.99/year, and that my subscription will automatically renew unless I cancel.',   legal: legalShort, cta: 'Start My Diamond Membership', requireConsent: false },
         monthly: { heading: 'We hope you enjoy your special offer!', subtitle: '1 Free Month + 50% off your first month', badge: 'Diamond - Monthly:&nbsp; $16.99', showSavings: false, savingsText: '', consent: 'I understand that after my 1 free month, I will be charged $8.49 for the first month, then $16.99/month, and that my subscription will automatically renew unless I cancel.', legal: legalShort, cta: 'Start My Diamond Membership', requireConsent: false },
       },
     };
 
-    function setFlow(flow, btn) {
+    function setFlow(flow) {
       currentFlow = flow;
       currentPayment = 'card';
       document.getElementById('consent-checkbox').checked = false;
-      document.querySelectorAll('#flow-pills .proto-pill').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.pay-tab').forEach(b => b.classList.toggle('active', b.title === 'Credit Card'));
-      btn.classList.add('active');
       render();
       renderPayment();
     }
@@ -746,7 +1067,7 @@
     function setBilling(bill, btn) {
       currentBilling = bill;
       document.getElementById('consent-checkbox').checked = false;
-      document.querySelectorAll('#billing-pills .proto-pill').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#billing-toggle .proto-toggle-opt').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       render();
     }
@@ -776,6 +1097,7 @@
 
     function render() {
       const s        = states[currentFlow][currentBilling];
+      const reg      = regionConfig[currentRegion];
       const checkbox = document.getElementById('consent-checkbox');
       const headingEl  = document.getElementById('checkout-heading');
       const subtitleEl = document.getElementById('offer-subtitle');
@@ -783,21 +1105,24 @@
       // Heading
       headingEl.textContent = s.heading;
 
-      // Subtitle
-      if (s.subtitle) {
-        subtitleEl.innerHTML = s.subtitle;
+      // Subtitle (region override e.g. EU euro amounts)
+      const subtitleText = (reg.subtitleOverride && reg.subtitleOverride[currentFlow] && reg.subtitleOverride[currentFlow][currentBilling]) || s.subtitle;
+      if (subtitleText) {
+        subtitleEl.innerHTML = subtitleText;
         subtitleEl.style.display = '';
       } else {
         subtitleEl.style.display = 'none';
       }
 
-      // Badge
-      document.getElementById('plan-badge-text').innerHTML = s.badge;
+      // Badge (region override for EU pricing)
+      const badgeText = reg.badgeOverride ? reg.badgeOverride[currentFlow][currentBilling] : s.badge;
+      document.getElementById('plan-badge-text').innerHTML = badgeText;
 
-      // Savings
+      // Savings (region override for EU currency/amount)
       const savingsEl = document.getElementById('savings-text');
+      const savingsText = (reg.savingsOverride && reg.savingsOverride[currentBilling]) || s.savingsText;
       if (s.showSavings) {
-        savingsEl.innerHTML = s.savingsText;
+        savingsEl.innerHTML = savingsText;
         savingsEl.style.display = '';
       } else {
         savingsEl.style.display = 'none';
@@ -816,25 +1141,108 @@
         consentText.style.maxWidth = '54rem'; // same width for all flows on desktop
       }
 
-      // Consent text (desktop + mobile)
-      document.getElementById('consent-text').textContent = s.consent;
-      document.getElementById('consent-mobile-text').textContent = s.consent;
+      // Consent row — show/hide entire row (checkbox + text) based on region
+      const consentFull = s.consent + (reg.consentSuffix || '');
+      document.getElementById('consent-text').textContent = consentFull;
+      document.getElementById('consent-mobile-text').textContent = consentFull;
+      document.getElementById('consent-row').style.display        = reg.showCheckbox ? '' : 'none';
+      document.getElementById('consent-mobile-text').style.display = reg.showCheckbox ? '' : 'none';
 
-      // Legal
+      // Legal text
+      let legalLines;
+      if (currentVariant === 'money-back-v2') {
+        // Figma design: consent sentence + "Prices subject to change." then "I agree to SA."
+        const consentSentence = s.consent + (reg.consentSuffix || '') + ' Prices subject to change.';
+        legalLines = [consentSentence, `I agree to the ${sa}.`];
+      } else {
+        // Default: region override for US; standard for CA/EU
+        legalLines = reg.legalOverride ? reg.legalOverride(currentFlow, currentBilling) : s.legal;
+      }
       document.getElementById('agreement-text').innerHTML =
-        s.legal.map(line => `<span>${line}</span>`).join('');
+        legalLines.map(line => `<span>${line}</span>`).join('');
 
       // CTA text
       document.getElementById('cta-text').textContent = s.cta;
 
-      // CTA enabled/disabled
-      const ctaBtn = document.getElementById('cta-button');
-      ctaBtn.disabled = !checkbox.checked;
+      // CTA enabled/disabled — v2 has no checkbox so consent is always satisfied
+      const ctaBtn  = document.getElementById('cta-button');
+      const consentOk = currentVariant === 'money-back-v2' || !reg.consentRequired(currentFlow) || checkbox.checked;
+      ctaBtn.disabled = !isFormValid() || !consentOk;
+
+      // Zip / Postal Code fields — hide entirely for EU via CSS class
+      document.getElementById('page-inner').classList.toggle('no-zip', !reg.showZip);
+      // Zip / Postal Code labels
+      ['zip-label-desktop', 'zip-label-mobile', 'zip-label-wallet'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = reg.zipLabel;
+      });
+
+      // Tax text
+      const taxEl = document.getElementById('tax-text');
+      taxEl.style.display  = reg.showTax ? '' : 'none';
+      taxEl.textContent    = reg.taxText;
+
+      // Extra gap: content → bottom = 24px for discount/freetime/combined on US & EU
+      const bottomEl = document.querySelector('.bottom');
+      const needsExtraGap = ['discount', 'freetime', 'combined'].includes(currentFlow)
+                         && ['us', 'eu'].includes(currentRegion)
+                         && !isMobile;
+      bottomEl.style.marginTop = needsExtraGap ? '1.2rem' : '';
+
+      // Product card (product-card variant)
+      if (currentVariant === 'product-card') {
+        const isFree   = ['trial', 'freetime', 'combined'].includes(currentFlow);
+        const bullet1  = isFree
+          ? (currentFlow === 'freetime' ? 'Try Free for 1 Month' : 'Try Free for 7 Days')
+          : `Your plan will renew on ${getRenewalDate()}`;
+        document.getElementById('pc-title').textContent =
+          `Diamond Membership - ${currentBilling === 'yearly' ? 'Yearly' : 'Monthly'}`;
+        document.getElementById('pc-bullet1').textContent  = bullet1;
+        document.getElementById('pc-due-amount').textContent = getDueToday();
+      }
+    }
+
+    /* ── FORM VALIDATION ── */
+    function isFormValid() {
+      if (currentPayment !== 'card') {
+        // Wallet: only the zip field is shown (CA/US); EU has no zip
+        if (regionConfig[currentRegion].showZip) {
+          const el = document.getElementById('w-zip');
+          return el && el.value.trim() !== '';
+        }
+        return true;
+      }
+      const isMobile = document.getElementById('page-inner').classList.contains('is-mobile');
+      let ids;
+      if (currentRegion === 'eu') {
+        ids = ['eu-card', 'eu-exp', 'eu-cvv'];
+      } else if (isMobile) {
+        ids = regionConfig[currentRegion].showZip
+          ? ['m-card', 'm-exp', 'm-cvv', 'm-zip']
+          : ['m-card', 'm-exp', 'm-cvv'];
+      } else {
+        ids = regionConfig[currentRegion].showZip
+          ? ['f-card', 'f-exp', 'f-cvv', 'f-zip']
+          : ['f-card', 'f-exp', 'f-cvv'];
+      }
+      return ids.every(id => {
+        const el = document.getElementById(id);
+        return el && el.value.trim() !== '';
+      });
+    }
+
+    function updateCTAState() {
+      const reg       = regionConfig[currentRegion];
+      const checkbox  = document.getElementById('consent-checkbox');
+      const ctaBtn    = document.getElementById('cta-button');
+      const consentOk = !reg.consentRequired(currentFlow) || checkbox.checked;
+      ctaBtn.disabled = !isFormValid() || !consentOk;
     }
 
     // Init
     applyDevice();
     render();
+    document.querySelector('.form-section').addEventListener('input', updateCTAState);
   </script>
 </body>
 </html>
