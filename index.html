@@ -281,10 +281,17 @@
     .cta-applepay {
       width: 100%; max-width: 41.4rem; height: 5.5rem; border-radius: 0.3rem;
       background: #fff; border: 0;
-      display: none; align-items: center; justify-content: center; gap: 0.8rem;
+      display: none; align-items: center; justify-content: center; gap: 0;
       cursor: pointer; transition: filter .15s; flex-shrink: 0;
       font-family: -apple-system, "system-ui", BlinkMacSystemFont, sans-serif;
-      font-size: 1.9rem; font-weight: 300; color: #000; letter-spacing: -.01em;
+      font-size: 2.7rem; font-weight: 300; color: #000; letter-spacing: -.01em;
+      padding: 0.1rem 0.6rem;
+    }
+    .cta-applepay .apple-pay-logo {
+      display: inline-flex; align-items: center; gap: 0.3rem; margin-left: 0.4rem;
+    }
+    .cta-applepay .apple-pay-logo img {
+      display: block; filter: brightness(0);
     }
     .cta-applepay:hover { filter: brightness(.96); }
     /* hide card form when wallet method active */
@@ -299,7 +306,7 @@
     .is-mobile .cta-applepay { max-width: 100%; }
 
     /* ── MOBILE FORM (hidden by default) ── */
-    .form--mobile { display: none; flex-direction: column; gap: 1rem; }
+    .form--mobile { display: none; flex-direction: column; gap: 1.6rem; }
 
     /* ── MOBILE CONSENT (plain text, no checkbox) ── */
     .consent-mobile {
@@ -322,7 +329,7 @@
     }
 
     /* ── MOBILE OVERRIDES ── */
-    .is-mobile .heading    { font-size: 2.2rem; line-height: 2.8rem; font-weight: 700; }
+    .is-mobile .heading    { font-size: 2.6rem; line-height: 3.2rem; font-weight: 700; }
     .is-mobile .subtitle   { font-size: 1.5rem; line-height: 2rem; }
     .is-mobile .main       { padding: 2.4rem 1.2rem 6rem; }
     .is-mobile .content    { max-width: 34.2rem; }
@@ -331,6 +338,7 @@
     .is-phone-sm .main     { padding-left: 1.2rem; padding-right: 1.2rem; }
     /* mobile header: 40px tall, 12px side padding matching main */
     .is-mobile .header { height: 4rem; padding: 0 1.2rem; }
+    .is-mobile .bottom     { gap: 1.6rem; }
     .is-mobile .cta-btn    { max-width: 100%; font-size: 1.7rem; line-height: 2rem; font-weight: 700; }
     .is-mobile .label      { font-size: 1.7rem; line-height: 2.4rem; }
     .is-mobile .input      { height: 4.8rem; font-size: 1.8rem; }
@@ -447,6 +455,10 @@
 
           <!-- Payment tabs -->
           <div class="payment-tabs">
+            <!-- Apple Pay -->
+            <button class="pay-tab" onclick="selectPayment(this)" title="Apple Pay">
+              <img src="https://www.chess.com/bundles/web/images/logo-applepay@2x.png" alt="Apple Pay">
+            </button>
             <!-- Credit Card -->
             <button class="pay-tab active" onclick="selectPayment(this)" title="Credit Card">
               <img src="https://www.chess.com/bundles/web/images/cards_s.167c1af8.png" alt="Credit Card">
@@ -458,10 +470,6 @@
             <!-- Google Pay -->
             <button class="pay-tab" onclick="selectPayment(this)" title="Google Pay">
               <img src="https://www.chess.com/bundles/web/images/logo-googlepay@2x.png" alt="Google Pay">
-            </button>
-            <!-- Apple Pay -->
-            <button class="pay-tab" onclick="selectPayment(this)" title="Apple Pay">
-              <img src="https://www.chess.com/bundles/web/images/logo-applepay@2x.png" alt="Apple Pay">
             </button>
           </div>
 
@@ -513,19 +521,20 @@
             </div>
           </form>
 
-          <!-- Form (mobile layout: Card full-width → Security+Expires 50/50 → Zip full-width) -->
+          <!-- Form (mobile layout: Card+Expires 3:2 → Security+Zip 50/50) -->
           <form class="form form--mobile" onsubmit="return false">
-            <!-- Email -->
-            <div class="field">
-              <label class="label" for="m-email">Email Address</label>
-              <input class="input" id="m-email" type="email" placeholder="Enter your email" spellcheck="false">
+            <!-- Card Number + Expires (3:2) -->
+            <div class="field-row">
+              <div class="field field--card">
+                <label class="label" for="m-card">Card Number</label>
+                <input class="input" id="m-card" type="text" placeholder="•••• •••• •••• ••••" spellcheck="false">
+              </div>
+              <div class="field field--expires">
+                <label class="label" for="m-exp">Expires</label>
+                <input class="input" id="m-exp" type="text" placeholder="MM / YY" spellcheck="false">
+              </div>
             </div>
-            <!-- Card Number (full width) -->
-            <div class="field">
-              <label class="label" for="m-card">Card Number</label>
-              <input class="input" id="m-card" type="text" placeholder="•••• •••• •••• ••••" spellcheck="false">
-            </div>
-            <!-- Security Code + Expires (50/50) -->
+            <!-- Security Code + Zip Code (50/50) -->
             <div class="field-row">
               <div class="field">
                 <label class="label" for="m-cvv">Security Code</label>
@@ -541,14 +550,9 @@
                 </div>
               </div>
               <div class="field">
-                <label class="label" for="m-exp">Expires</label>
-                <input class="input" id="m-exp" type="text" placeholder="MM / YY" spellcheck="false">
+                <label class="label" for="m-zip">Zip Code</label>
+                <input class="input" id="m-zip" type="text" placeholder="00000" spellcheck="false">
               </div>
-            </div>
-            <!-- Zip Code (full width) -->
-            <div class="field">
-              <label class="label" for="m-zip">Zip Code</label>
-              <input class="input" id="m-zip" type="text" placeholder="00000" spellcheck="false">
             </div>
           </form>
 
@@ -610,7 +614,10 @@
         <!-- Apple Pay CTA -->
         <button class="cta-applepay" id="cta-applepay">
           <span>Check out with</span>
-          <img src="https://www.chess.com/bundles/web/images/logo-applepay@2x.png" alt="Apple Pay" style="height:22px;width:auto;filter:invert(1);">
+          <span class="apple-pay-logo">
+            <img src="https://www.chess.com/bundles/web/images/glyphs/logo-apple.svg" alt="" height="24" width="24">
+            <span>Pay</span>
+          </span>
         </button>
 
         <!-- Recurring text (mobile only, below CTA) -->
@@ -727,7 +734,7 @@
       currentPayment = 'card';
       document.getElementById('consent-checkbox').checked = false;
       document.querySelectorAll('#flow-pills .proto-pill').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.pay-tab').forEach((b,i) => b.classList.toggle('active', i===0));
+      document.querySelectorAll('.pay-tab').forEach(b => b.classList.toggle('active', b.title === 'Credit Card'));
       btn.classList.add('active');
       render();
       renderPayment();
