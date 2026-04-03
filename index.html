@@ -444,7 +444,9 @@
       color: #81b64c;
     }
     /* Money-back v1: green chip shown above consent/legal */
-    .variant-money-back .money-back-chip    { display: flex; margin-bottom: -0.8rem; }
+    .variant-money-back .money-back-chip    { display: flex; }
+    .variant-money-back .bottom             { margin-top: 0.4rem; } /* 20px + 4px = 24px inputs→chip on desktop/tablet */
+    .is-mobile.variant-money-back .bottom   { margin-top: 0; }      /* mobile main gap already 24px */
     .variant-money-back .savings            { display: none !important; }
 
     /* Money-back v2 chip — neutral pill, not green */
@@ -1183,8 +1185,10 @@
       taxEl.textContent    = reg.taxText;
 
       // Extra gap: content → bottom = 24px for discount/freetime/combined on US & EU
+      // (v1 money-back handles its own gap via CSS, skip to avoid conflict)
       const bottomEl = document.querySelector('.bottom');
-      const needsExtraGap = ['discount', 'freetime', 'combined'].includes(currentFlow)
+      const needsExtraGap = currentVariant !== 'money-back'
+                         && ['discount', 'freetime', 'combined'].includes(currentFlow)
                          && ['us', 'eu'].includes(currentRegion)
                          && !isMobile;
       bottomEl.style.marginTop = needsExtraGap ? '1.2rem' : '';
