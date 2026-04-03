@@ -449,26 +449,6 @@
     .is-mobile.variant-money-back .bottom   { margin-top: 0; }      /* mobile main gap already 24px */
     .variant-money-back .savings            { display: none !important; }
 
-    /* Money-back v2 chip — neutral pill, not green */
-    .money-back-chip-v2 {
-      display: none; align-items: center; justify-content: center;
-      gap: 0.4rem; padding: 0.6rem 1.2rem; min-height: 2rem;
-      border-radius: 2rem; background: #312e2b;
-      border: 1px solid rgba(255,255,255,.25);
-      color: rgba(255,255,255,.72);
-      margin-bottom: -0.8rem;
-    }
-    .money-back-chip-v2 span {
-      font-family: var(--font-body); font-weight: 600;
-      font-size: 1.2rem; line-height: 1.6rem;
-      text-shadow: 0 1px 0 rgba(0,0,0,.2);
-    }
-    .variant-money-back-v2 .money-back-chip-v2 { display: flex; }
-    .variant-money-back-v2 .savings            { display: none !important; }
-    .variant-money-back-v2 .consent-row        { display: none !important; }
-    .variant-money-back-v2 .consent-mobile     { display: none !important; }
-    .variant-money-back-v2 .agreement-mobile   { display: none !important; }
-    .variant-money-back-v2 .legal              { margin-top: 0; gap: 1.6rem; }
 
     /* ── REGION: no-zip (EU) ── */
     .no-zip #zip-field-desktop,
@@ -488,7 +468,6 @@
         <button class="proto-pill active" onclick="setVariant('live',this)">Live Checkout</button>
         <button class="proto-pill" onclick="setVariant('product-card',this)">Product Card Experiment</button>
         <button class="proto-pill" onclick="setVariant('money-back',this)">30-days Money Back Guarantee</button>
-        <button class="proto-pill" onclick="setVariant('money-back-v2',this)">30-days Money Back Guarantee v2</button>
       </div>
     </div>
 
@@ -779,14 +758,6 @@
           <span>30 day money-back guarantee</span>
         </div>
 
-        <!-- 30-day chip v2 (money-back-v2 variant only) — neutral pill per Figma -->
-        <div class="money-back-chip-v2">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 1L1.5 2.8V6c0 2.3 1.9 4.3 4.5 5 2.6-.7 4.5-2.7 4.5-5V2.8L6 1z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>
-            <path d="M4 6l1.3 1.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>30 day money-back guarantee</span>
-        </div>
 
         <!-- Consent (checkbox + text) -->
         <div class="consent-row" id="consent-row">
@@ -931,10 +902,9 @@
       document.querySelectorAll('#variant-pills .proto-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const page = document.getElementById('page-inner');
-      page.classList.remove('variant-product-card', 'variant-money-back', 'variant-money-back-v2');
-      if (variant === 'product-card')   page.classList.add('variant-product-card');
-      if (variant === 'money-back')     page.classList.add('variant-money-back');
-      if (variant === 'money-back-v2')  page.classList.add('variant-money-back-v2');
+      page.classList.remove('variant-product-card', 'variant-money-back');
+      if (variant === 'product-card') page.classList.add('variant-product-card');
+      if (variant === 'money-back')   page.classList.add('variant-money-back');
       render();
     }
 
@@ -1150,25 +1120,17 @@
       document.getElementById('consent-row').style.display        = reg.showCheckbox ? '' : 'none';
       document.getElementById('consent-mobile-text').style.display = reg.showCheckbox ? '' : 'none';
 
-      // Legal text
-      let legalLines;
-      if (currentVariant === 'money-back-v2') {
-        // Figma design: consent sentence + "Prices subject to change." then "I agree to SA."
-        const consentSentence = s.consent + (reg.consentSuffix || '') + ' Prices subject to change.';
-        legalLines = [consentSentence, `I agree to the ${sa}.`];
-      } else {
-        // Default: region override for US; standard for CA/EU
-        legalLines = reg.legalOverride ? reg.legalOverride(currentFlow, currentBilling) : s.legal;
-      }
+      // Legal (region override for US; default for CA/EU)
+      const legalLines = reg.legalOverride ? reg.legalOverride(currentFlow, currentBilling) : s.legal;
       document.getElementById('agreement-text').innerHTML =
         legalLines.map(line => `<span>${line}</span>`).join('');
 
       // CTA text
       document.getElementById('cta-text').textContent = s.cta;
 
-      // CTA enabled/disabled — v2 has no checkbox so consent is always satisfied
+      // CTA enabled/disabled
       const ctaBtn  = document.getElementById('cta-button');
-      const consentOk = currentVariant === 'money-back-v2' || !reg.consentRequired(currentFlow) || checkbox.checked;
+      const consentOk = !reg.consentRequired(currentFlow) || checkbox.checked;
       ctaBtn.disabled = !isFormValid() || !consentOk;
 
       // Zip / Postal Code fields — hide entirely for EU via CSS class
