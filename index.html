@@ -1159,7 +1159,7 @@
       if (currentVariant === 'product-card') {
         const isFree   = ['trial', 'freetime', 'combined'].includes(currentFlow);
         const bullet1  = isFree
-          ? (currentFlow === 'freetime' ? 'Try Free for 1 Month' : 'Try Free for 7 Days')
+          ? (['freetime', 'combined'].includes(currentFlow) ? 'Try Free for 1 Month' : 'Try Free for 7 Days')
           : `Your plan will renew on ${getRenewalDate()}`;
         document.getElementById('pc-title').textContent =
           `Diamond Membership - ${currentBilling === 'yearly' ? 'Yearly' : 'Monthly'}`;
